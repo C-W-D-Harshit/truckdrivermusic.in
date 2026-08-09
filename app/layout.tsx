@@ -14,11 +14,11 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Truck Driver Music — Horn OK Please",
+  title: "Truck Driver Music | Horn OK Please",
   description:
     "Highway bangers that blast out of Indian trucks. Open it. Press play.",
   openGraph: {
-    title: "Truck Driver Music — Horn OK Please",
+    title: "Truck Driver Music | Horn OK Please",
     description: "Highway bangers that blast out of Indian trucks.",
     type: "website",
   },

@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# truckdrivermusic.in
 
-## Getting Started
+Open it. Press play. Indian truck driver music for the long highway.
 
-First, run the development server:
+**Live:** [truckdrivermusic.in](https://truckdrivermusic.in)
+
+One-screen site: painterly highway art, glass music pill, YouTube playlist playback. Built with Next.js.
+
+## Dev
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+bun install
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Playlist
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Default YouTube playlist is set in `lib/playlist.ts`. Override with:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+NEXT_PUBLIC_YT_PLAYLIST_ID=PLxxxxxxxx
+```
 
-## Learn More
+See `.env.example`.
 
-To learn more about Next.js, take a look at the following resources:
+## Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Next.js 16 + React 19
+- Tailwind CSS 4
+- framer-motion
+- YouTube IFrame Player API
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Author
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+[Harshit](https://harxit.com?utm_source=truckdrivermusic.in&utm_medium=referral&utm_campaign=github_readme)
