@@ -1,69 +1,62 @@
-import Image from "next/image";
+import { Clock } from "./clock";
+import { MusicPill } from "./music-pill";
+import { YT_MUSIC_PLAYLIST_URL } from "@/lib/playlist";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
+    <>
+      <div className="bg" aria-hidden="true">
+        <div className="bg__img" />
+        <div className="bg__scrim" />
+      </div>
+
+      <main className="shell">
+        <header className="topbar">
+          <Clock />
+
+          <div className="presence" aria-live="polite">
+            <span className="presence__dot" aria-hidden="true" />
+            <span className="presence__count">47</span>
+            <span className="presence__label">on the highway</span>
+          </div>
+
+          <nav className="links" aria-label="Listen elsewhere">
+            <a
+              className="link"
+              href={YT_MUSIC_PLAYLIST_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open playlist on YouTube Music"
+              title="YouTube Music"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0zm0 19.104c-3.924 0-7.104-3.18-7.104-7.104S8.076 4.896 12 4.896s7.104 3.18 7.104 7.104-3.18 7.104-7.104 7.104zm0-13.332c-3.432 0-6.228 2.796-6.228 6.228S8.568 18.228 12 18.228s6.228-2.796 6.228-6.228S15.432 5.772 12 5.772zM9.684 15.54V8.46L15.816 12l-6.132 3.54z" />
+              </svg>
+            </a>
+          </nav>
+        </header>
+
+        <div aria-hidden="true" style={{ height: "2.5rem" }} />
+
+        <div className="logo-wrap">
+          <h1 className="logo">
+            <span className="logo__line">ट्रक ड्राइवर</span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+          <span className="logo__en">Music</span>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        <div className="dock">
+          <p className="shayari">बुरी नज़र वाले तेरा मुँह काला</p>
+
+          <MusicPill />
         </div>
       </main>
-    </div>
+    </>
   );
 }
