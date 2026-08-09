@@ -48,26 +48,38 @@ body {
 .bg__img {
   position: absolute;
   inset: 0;
+  /* Mobile: portrait crop of the highway truck art */
   background-image: image-set(
-    url("/hero.webp") type("image/webp"),
-    url("/hero.jpg") type("image/jpeg")
+    url("/hero-mobile.webp") type("image/webp"),
+    url("/hero-mobile.jpg") type("image/jpeg")
   );
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center 40%;
+  background-position: center center;
 }
 
-/* Saloon-like: light touch, art stays legible */
+/* Desktop: full landscape frame */
+@media (min-width: 768px) {
+  .bg__img {
+    background-image: image-set(
+      url("/hero-desktop.webp") type("image/webp"),
+      url("/hero-desktop.jpg") type("image/jpeg")
+    );
+    background-position: center 40%;
+  }
+}
+
+/* Saloon-like: light touch so painterly color stays playful */
 .bg__scrim {
   position: absolute;
   inset: 0;
   pointer-events: none;
   background: linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0.12) 0%,
-    transparent 28%,
-    transparent 58%,
-    rgba(0, 0, 0, 0.42) 100%
+    rgba(0, 0, 0, 0.1) 0%,
+    transparent 32%,
+    transparent 62%,
+    rgba(0, 0, 0, 0.38) 100%
   );
 }
 
@@ -93,9 +105,9 @@ body {
   left: var(--edge);
   right: var(--edge);
   z-index: 20;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 0.75rem;
   text-shadow: var(--text-shadow);
   animation: rise var(--settle) 0.28s both;
@@ -103,55 +115,13 @@ body {
 }
 
 .clock {
-  justify-self: start;
   font-size: 0.82rem;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
   color: rgba(255, 255, 255, 0.92);
-}
-
-.presence {
-  justify-self: center;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.82rem;
-  font-weight: 500;
-  white-space: nowrap;
-  color: rgba(255, 255, 255, 0.92);
-}
-
-.presence__dot {
-  position: relative;
-  width: 10px;
-  height: 10px;
-  flex: none;
-  border-radius: 50%;
-  background: #4ade80;
-  box-shadow: 0 0 8px rgba(74, 222, 128, 0.9);
-}
-
-.presence__dot::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: #4ade80;
-  opacity: 0.75;
-  animation: ping 1.9s cubic-bezier(0, 0, 0.2, 1) infinite;
-}
-
-.presence__count {
-  font-variant-numeric: tabular-nums;
-}
-
-.presence__label {
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.62);
 }
 
 .links {
-  justify-self: end;
   display: flex;
   align-items: center;
   gap: 0.25rem;
@@ -220,7 +190,7 @@ body {
   position: relative;
   width: 100%;
   max-width: 36rem;
-  margin-bottom: clamp(1.25rem, 8vh, 4.5rem);
+  margin-bottom: clamp(1rem, 6vh, 3.5rem);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -238,6 +208,32 @@ body {
   color: rgba(255, 255, 255, 0.55);
   text-shadow: var(--text-shadow);
   max-width: 22rem;
+}
+
+/* Quiet signature under the player — not competing with top chrome */
+.credit {
+  margin: 0.15rem 0 0;
+  font-family: var(--ui);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-align: center;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.42);
+  text-shadow: var(--text-shadow);
+}
+
+.credit a {
+  color: rgba(255, 255, 255, 0.55);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+  padding-bottom: 0.05em;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.credit a:hover {
+  color: rgba(255, 255, 255, 0.9);
+  border-bottom-color: rgba(255, 255, 255, 0.55);
 }
 
 /* ── MusicPill ──────────────────────────────────────────────── */
@@ -649,21 +645,13 @@ body {
   }
 }
 
-@keyframes ping {
-  75%,
-  100% {
-    transform: scale(2.2);
-    opacity: 0;
-  }
-}
-
 @media (max-width: 540px) {
-  .presence__label {
-    display: none;
-  }
-
   .dock {
     max-width: 100%;
+  }
+
+  .credit {
+    font-size: 0.65rem;
   }
 
   .music-pill {
@@ -691,7 +679,6 @@ body {
   .topbar,
   .logo-wrap,
   .dock,
-  .presence__dot::after,
   .music-pill__cover.is-spinning img,
   .music-pill__title--scroll,
   .music-pill__skel-pulse,

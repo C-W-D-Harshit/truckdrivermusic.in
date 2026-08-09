@@ -14,12 +14,6 @@ export default function Home() {
         <header className="topbar">
           <Clock />
 
-          <div className="presence" aria-live="polite">
-            <span className="presence__dot" aria-hidden="true" />
-            <span className="presence__count">47</span>
-            <span className="presence__label">on the highway</span>
-          </div>
-
           <nav className="links" aria-label="Listen elsewhere">
             <a
               className="link"
@@ -55,6 +49,17 @@ export default function Home() {
           <p className="shayari">बुरी नज़र वाले तेरा मुँह काला</p>
 
           <MusicPill />
+
+          <p className="credit">
+            made with ❤️ by{" "}
+            <a
+              href="https://harxit.com?utm_source=truckdrivermusic.in&utm_medium=referral&utm_campaign=made_with_love"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Harshit
+            </a>
+          </p>
         </div>
       </main>
     </>
