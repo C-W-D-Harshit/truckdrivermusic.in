@@ -1,10 +1,13 @@
 import { Clock } from "./clock";
+import { JsonLd } from "./json-ld";
 import { MusicPill } from "./music-pill";
 import { YT_MUSIC_PLAYLIST_URL } from "@/lib/playlist";
 
 export default function Home() {
   return (
     <>
+      <JsonLd />
+
       <div className="bg" aria-hidden="true">
         <div className="bg__img" />
         <div className="bg__scrim" />
