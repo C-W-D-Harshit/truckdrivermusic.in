@@ -1,5 +1,6 @@
 import { Clock } from "./clock";
 import { JsonLd } from "./json-ld";
+import { Listeners } from "./listeners";
 import { MusicPill } from "./music-pill";
 import { YT_MUSIC_PLAYLIST_URL } from "@/lib/playlist";
 
@@ -15,9 +16,38 @@ export default function Home() {
 
       <main className="shell">
         <header className="topbar">
-          <Clock />
+          <div className="topbar__left">
+            <Clock />
+            <span className="topbar__sep" aria-hidden="true" />
+            <Listeners />
+          </div>
 
-          <nav className="links" aria-label="Listen elsewhere">
+          <nav className="links" aria-label="Support and listen elsewhere">
+            <a
+              className="support"
+              href="https://buymeacoffee.com/cwd.harshit"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Buy me a coffee"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                width="16"
+                height="16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9Z" />
+                <path d="M17 10h1.6a2.4 2.4 0 0 1 0 4.8H17" />
+                <path d="M8 2.5c-.7.9-.7 1.8 0 2.7M12 2.5c-.7.9-.7 1.8 0 2.7" />
+              </svg>
+              Support me
+            </a>
+
             <a
               className="link"
               href={YT_MUSIC_PLAYLIST_URL}

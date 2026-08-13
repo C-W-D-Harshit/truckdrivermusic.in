@@ -121,10 +121,59 @@ body {
   color: rgba(255, 255, 255, 0.92);
 }
 
+.topbar__left {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+.topbar__sep {
+  width: 1px;
+  height: 0.85rem;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.listeners {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 1rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.listeners__dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.55);
+  animation: pulse-dot 2.4s ease-out infinite;
+}
+
+.listeners__count {
+  font-variant-numeric: tabular-nums;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+@keyframes pulse-dot {
+  0% {
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 0.32rem rgba(74, 222, 128, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0);
+  }
+}
+
 .links {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.4rem;
 }
 
 .link {
@@ -144,6 +193,49 @@ body {
 
 .link:active {
   transform: scale(0.95);
+}
+
+/* Support link — quiet glass pill, brand yellow only in the icon */
+.support {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.38rem;
+  height: 2rem;
+  padding: 0 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  font-family: var(--ui);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.78);
+  text-decoration: none;
+  transition: background var(--swift), border-color var(--swift),
+    color var(--swift), transform var(--swift);
+}
+
+.support svg {
+  flex: none;
+  color: rgba(255, 221, 0, 0.85);
+  transition: color var(--swift);
+}
+
+.support:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.support:hover svg {
+  color: #ffdd00;
+}
+
+.support:active {
+  transform: scale(0.96);
 }
 
 /* ── Wordmark (stamp, not mural) ────────────────────────────── */
@@ -654,6 +746,21 @@ body {
     font-size: 0.65rem;
   }
 
+  .support {
+    height: 1.85rem;
+    padding: 0 0.6rem;
+    font-size: 0.72rem;
+  }
+
+  /* Keep the top bar on one line — the dot + number still read as "live" */
+  .listeners__label {
+    display: none;
+  }
+
+  .listeners {
+    font-size: 0.74rem;
+  }
+
   .music-pill {
     gap: 0.75rem;
     min-height: 5.25rem;
@@ -682,7 +789,8 @@ body {
   .music-pill__cover.is-spinning img,
   .music-pill__title--scroll,
   .music-pill__skel-pulse,
-  .music-pill__skel-line::after {
+  .music-pill__skel-line::after,
+  .listeners__dot {
     animation: none;
   }
 }
