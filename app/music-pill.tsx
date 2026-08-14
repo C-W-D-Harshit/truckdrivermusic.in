@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import posthog from "posthog-js";
 import {
   useCallback,
   useEffect,
@@ -26,6 +27,10 @@ import {
 
 /** Minimum time the skeleton stays up so the swap never feels instant/janky */
 const MIN_SKELETON_MS = 1100;
+const posthogEnabled = Boolean(
+  process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN &&
+    process.env.NEXT_PUBLIC_POSTHOG_HOST,
+);
 
 export type MusicPillProps = {
   autoplay?: boolean;
@@ -273,8 +278,15 @@ export function MusicPill({ autoplay = false, className = "" }: MusicPillProps) 
         /* ignore */
       }
       seekToRatio(ratioFromPointer(e.clientX));
+      if (posthogEnabled) {
+        posthog.capture("playlist_seek_completed", {
+          position_seconds: Math.round(
+            Math.min(1, Math.max(0, ratioFromPointer(e.clientX))) * duration,
+          ),
+        });
+      }
     },
-    [ratioFromPointer, seekToRatio],
+    [duration, ratioFromPointer, seekToRatio],
   );
 
   const onSeekKeyDown = useCallback(
@@ -284,15 +296,33 @@ export function MusicPill({ autoplay = false, className = "" }: MusicPillProps) 
       if (e.key === "ArrowRight" || e.key === "ArrowUp") {
         e.preventDefault();
         seekToRatio((progress + step) / duration);
+        if (posthogEnabled) {
+          posthog.capture("playlist_seek_completed", {
+            position_seconds: Math.round(Math.min(duration, progress + step)),
+          });
+        }
       } else if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
         e.preventDefault();
         seekToRatio((progress - step) / duration);
+        if (posthogEnabled) {
+          posthog.capture("playlist_seek_completed", {
+            position_seconds: Math.round(Math.max(0, progress - step)),
+          });
+        }
       } else if (e.key === "Home") {
         e.preventDefault();
         seekToRatio(0);
+        if (posthogEnabled) {
+          posthog.capture("playlist_seek_completed", { position_seconds: 0 });
+        }
       } else if (e.key === "End") {
         e.preventDefault();
         seekToRatio(1);
+        if (posthogEnabled) {
+          posthog.capture("playlist_seek_completed", {
+            position_seconds: Math.round(duration),
+          });
+        }
       }
     },
     [duration, playerReady, progress, seekToRatio],
@@ -474,8 +504,14 @@ export function MusicPill({ autoplay = false, className = "" }: MusicPillProps) 
       const state = p.getPlayerState();
       if (state === YT_STATE.PLAYING || state === YT_STATE.BUFFERING) {
         p.pauseVideo();
+        if (posthogEnabled) {
+          posthog.capture("playlist_playback_toggled", { action: "paused" });
+        }
       } else {
         p.playVideo();
+        if (posthogEnabled) {
+          posthog.capture("playlist_playback_toggled", { action: "played" });
+        }
       }
     } catch {
       setError("Playback blocked — click play again.");
@@ -520,6 +556,9 @@ export function MusicPill({ autoplay = false, className = "" }: MusicPillProps) 
       } else {
         p.previousVideo();
       }
+      if (posthogEnabled) {
+        posthog.capture("playlist_track_skipped", { direction: "previous" });
+      }
     } catch {
       /* ignore */
     }
@@ -531,6 +570,9 @@ export function MusicPill({ autoplay = false, className = "" }: MusicPillProps) 
     setError(null);
     try {
       p.nextVideo();
+      if (posthogEnabled) {
+        posthog.capture("playlist_track_skipped", { direction: "next" });
+      }
     } catch {
       /* ignore */
     }
