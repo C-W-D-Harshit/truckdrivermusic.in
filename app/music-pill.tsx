@@ -1,6 +1,5 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
 import posthog from "posthog-js";
 import {
   useCallback,
@@ -8,7 +7,6 @@ import {
   useId,
   useRef,
   useState,
-  type CSSProperties,
   type KeyboardEvent,
   type PointerEvent,
   type ReactNode,
@@ -58,29 +56,19 @@ function ControlButton({
   disabled?: boolean;
 }) {
   return (
-    <motion.button
+    <button
       type="button"
       aria-label={ariaLabel}
       disabled={disabled}
       onClick={onClick}
-      whileHover={
-        disabled ? undefined : { scale: 1.06, filter: "brightness(1.12)" }
-      }
-      whileTap={disabled ? undefined : { scale: 0.92 }}
-      transition={{ type: "spring", stiffness: 520, damping: 28 }}
-      className="music-pill__btn"
-      style={
-        {
-          "--btn-bg": primary
-            ? "rgba(255,255,255,0.26)"
-            : "rgba(255,255,255,0.14)",
-          opacity: disabled ? 0.45 : 1,
-          cursor: disabled ? "default" : "pointer",
-        } as CSSProperties
+      className={
+        primary
+          ? "music-pill__btn music-pill__btn--primary"
+          : "music-pill__btn"
       }
     >
       {children}
-    </motion.button>
+    </button>
   );
 }
 
@@ -122,14 +110,13 @@ function PillSkeleton() {
 }
 
 export function MusicPill({ autoplay = false, className = "" }: MusicPillProps) {
-  const reduceMotion = useReducedMotion();
   const reactId = useId().replace(/:/g, "");
   const hostId = `yt-host-${reactId}`;
 
   const playerRef = useRef<YTPlayer | null>(null);
   const pollRef = useRef<number | null>(null);
   const metaPollRef = useRef<number | null>(null);
-  const mountedAtRef = useRef(Date.now());
+  const mountedAtRef = useRef<number | null>(null);
   const seekRailRef = useRef<HTMLDivElement | null>(null);
   const seekingRef = useRef(false);
   const titleContainerRef = useRef<HTMLDivElement | null>(null);
@@ -151,6 +138,10 @@ export function MusicPill({ autoplay = false, className = "" }: MusicPillProps) 
   const [cover, setCover] = useState("");
   const [shouldScrollTitle, setShouldScrollTitle] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    mountedAtRef.current = Date.now();
+  }, []);
 
   const tryRevealMeta = useCallback((player: YTPlayer): boolean => {
     try {
@@ -195,7 +186,7 @@ export function MusicPill({ autoplay = false, className = "" }: MusicPillProps) 
   // Hold skeleton for a beat even if YouTube returns instantly
   useEffect(() => {
     if (!metaReady) return;
-    const elapsed = Date.now() - mountedAtRef.current;
+    const elapsed = Date.now() - (mountedAtRef.current ?? Date.now());
     const wait = Math.max(0, MIN_SKELETON_MS - elapsed);
     const id = window.setTimeout(() => setShowPlayer(true), wait);
     return () => window.clearTimeout(id);
@@ -629,7 +620,7 @@ export function MusicPill({ autoplay = false, className = "" }: MusicPillProps) 
                   <span
                     ref={titleTextRef}
                     className={
-                      shouldScrollTitle && !reduceMotion
+                      shouldScrollTitle
                         ? "music-pill__title music-pill__title--scroll"
                         : "music-pill__title"
                     }

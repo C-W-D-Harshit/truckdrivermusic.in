@@ -1,7 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import { Baloo_2, Inter } from "next/font/google";
 import "./globals.css";
-import { SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE, SITE_URL } from "@/lib/site";
+import {
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_TITLE,
+  SITE_URL,
+} from "@/lib/site";
 
 const baloo = Baloo_2({
   variable: "--font-baloo",
@@ -14,18 +19,20 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const TITLE = `${SITE_NAME} — ${SITE_TAGLINE}`;
-
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: TITLE,
+    default: SITE_TITLE,
     template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
   keywords: [
     "truck driver music",
+    "truck wala music",
+    "truck wala playlist",
+    "truck wala song website",
+    "truck driver playlist website",
     "Indian truck music",
     "highway songs",
     "Punjabi trucking songs",
@@ -46,7 +53,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "/",
     siteName: SITE_NAME,
-    title: TITLE,
+    title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     locale: "en_IN",
     images: [
@@ -60,7 +67,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: TITLE,
+    title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     images: ["/og.jpg"],
   },
@@ -99,6 +106,24 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en-IN"
       className={`${baloo.variable} ${inter.variable} h-full antialiased`}
     >
+      <head>
+        <link
+          rel="preload"
+          as="image"
+          href="/hero-mobile.avif"
+          type="image/avif"
+          media="(max-width: 767px)"
+          fetchPriority="high"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/hero-desktop.avif"
+          type="image/avif"
+          media="(min-width: 768px)"
+          fetchPriority="high"
+        />
+      </head>
       <body className="min-h-full">
         {children}
       </body>

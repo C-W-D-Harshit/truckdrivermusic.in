@@ -1,5 +1,10 @@
 import { YT_MUSIC_PLAYLIST_URL } from "@/lib/playlist";
-import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
+import {
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_TITLE,
+  SITE_URL,
+} from "@/lib/site";
 
 /**
  * Structured data for the landing page.
@@ -16,6 +21,7 @@ const graph = {
       "@id": `${SITE_URL}/#website`,
       url: `${SITE_URL}/`,
       name: SITE_NAME,
+      alternateName: ["Truck Wala Music", "Horn OK Please"],
       description: SITE_DESCRIPTION,
       inLanguage: ["en-IN", "hi-IN"],
       publisher: { "@id": `${SITE_URL}/#person` },
@@ -30,7 +36,7 @@ const graph = {
       "@type": "WebPage",
       "@id": `${SITE_URL}/#webpage`,
       url: `${SITE_URL}/`,
-      name: SITE_NAME,
+      name: SITE_TITLE,
       description: SITE_DESCRIPTION,
       isPartOf: { "@id": `${SITE_URL}/#website` },
       about: { "@id": `${SITE_URL}/#playlist` },
@@ -40,13 +46,14 @@ const graph = {
     {
       "@type": "MusicPlaylist",
       "@id": `${SITE_URL}/#playlist`,
-      name: `${SITE_NAME} — Indian Highway Playlist`,
+      name: "Truck Wala Music — Indian Truck Driver Playlist",
       description: SITE_DESCRIPTION,
       url: `${SITE_URL}/`,
       sameAs: YT_MUSIC_PLAYLIST_URL,
       image: `${SITE_URL}/og.jpg`,
       genre: ["Punjabi music", "Bhojpuri music", "Bollywood", "Folk"],
       inLanguage: ["hi-IN", "pa-IN", "bho"],
+      isAccessibleForFree: true,
     },
   ],
 };

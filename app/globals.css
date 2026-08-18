@@ -24,7 +24,7 @@
 
 html,
 body {
-  height: 100%;
+  min-height: 100%;
 }
 
 body {
@@ -33,7 +33,7 @@ body {
   color: #fff;
   background: #05080c;
   -webkit-font-smoothing: antialiased;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 /* ── Background ─────────────────────────────────────────────── */
@@ -50,6 +50,7 @@ body {
   inset: 0;
   /* Mobile: portrait crop of the highway truck art */
   background-image: image-set(
+    url("/hero-mobile.avif") type("image/avif"),
     url("/hero-mobile.webp") type("image/webp"),
     url("/hero-mobile.jpg") type("image/jpeg")
   );
@@ -62,6 +63,7 @@ body {
 @media (min-width: 768px) {
   .bg__img {
     background-image: image-set(
+      url("/hero-desktop.avif") type("image/avif"),
       url("/hero-desktop.webp") type("image/webp"),
       url("/hero-desktop.jpg") type("image/jpeg")
     );
@@ -267,13 +269,124 @@ body {
 }
 
 .logo__en {
+  display: block;
+  margin-top: 0.55rem;
   font-family: var(--ui);
   font-size: clamp(0.62rem, 1.4vw, 0.72rem);
   font-weight: 500;
-  letter-spacing: 0.32em;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.55);
   filter: none;
+}
+
+/* ── Crawlable playlist guide ─────────────────────────────── */
+
+.playlist-guide {
+  position: relative;
+  z-index: 2;
+  padding: clamp(4.5rem, 9vw, 7.5rem) var(--edge);
+  background:
+    radial-gradient(circle at 20% 0%, rgba(187, 73, 37, 0.14), transparent 34rem),
+    linear-gradient(180deg, rgba(5, 8, 12, 0.94), #05080c 22%);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.playlist-guide__inner {
+  width: min(100%, 68rem);
+  margin: 0 auto;
+}
+
+.playlist-guide__eyebrow {
+  margin: 0 0 0.75rem;
+  font-family: var(--ui);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #f4a261;
+}
+
+.playlist-guide h2,
+.playlist-guide h3,
+.playlist-guide p {
+  text-wrap: balance;
+}
+
+.playlist-guide h2 {
+  max-width: 48rem;
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+}
+
+.playlist-guide__lead {
+  max-width: 48rem;
+  margin: 1.4rem 0 0;
+  font-family: var(--ui);
+  font-size: clamp(1rem, 2vw, 1.12rem);
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.playlist-guide__highlights,
+.playlist-guide__faq-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.playlist-guide__highlights {
+  margin-top: clamp(2.5rem, 6vw, 4rem);
+}
+
+.playlist-guide article {
+  padding: 1.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.playlist-guide article h3 {
+  margin: 0;
+  font-size: 1.08rem;
+  line-height: 1.25;
+}
+
+.playlist-guide article p {
+  margin: 0.65rem 0 0;
+  font-family: var(--ui);
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.playlist-guide__faq {
+  margin-top: clamp(4rem, 9vw, 7rem);
+}
+
+.playlist-guide__faq > h2 {
+  margin-bottom: 1.5rem;
+  font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+}
+
+.playlist-guide__cta {
+  display: inline-flex;
+  margin-top: 2rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid rgba(244, 162, 97, 0.45);
+  font-family: var(--ui);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #f4a261;
+  text-decoration: none;
+  transition: color var(--swift), border-color var(--swift);
+}
+
+.playlist-guide__cta:hover {
+  color: #ffc58f;
+  border-bottom-color: #ffc58f;
 }
 
 /* ── Bottom dock ────────────────────────────────────────────── */
@@ -602,11 +715,30 @@ body {
   height: 2.25rem;
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 999px;
-  background: var(--btn-bg, rgba(255, 255, 255, 0.14));
+  background: rgba(255, 255, 255, 0.14);
   color: #fff;
   cursor: pointer;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
   padding: 0;
+  transition: transform var(--swift), filter var(--swift), opacity var(--swift);
+}
+
+.music-pill__btn--primary {
+  background: rgba(255, 255, 255, 0.26);
+}
+
+.music-pill__btn:hover:not(:disabled) {
+  filter: brightness(1.12);
+  transform: scale(1.06);
+}
+
+.music-pill__btn:active:not(:disabled) {
+  transform: scale(0.92);
+}
+
+.music-pill__btn:disabled {
+  cursor: default;
+  opacity: 0.45;
 }
 
 .music-pill__btn:focus-visible {
@@ -779,6 +911,17 @@ body {
   .music-pill__btn {
     width: 2rem;
     height: 2rem;
+  }
+}
+
+@media (max-width: 760px) {
+  .playlist-guide__highlights,
+  .playlist-guide__faq-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .playlist-guide article {
+    padding: 1.2rem;
   }
 }
 

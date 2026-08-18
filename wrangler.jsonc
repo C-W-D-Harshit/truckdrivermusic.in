@@ -1,13 +1,15 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "truckdrivermusic",
-  "compatibility_date": "2026-08-14",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-08-18",
 
-  // Assets-only deploy: there is no `main` Worker entrypoint because nothing
-  // runs at request time. `next build` with `output: "export"` writes `out/`,
-  // and Cloudflare serves those files straight from the edge.
+  // The Worker canonicalizes protocol/host before serving the static export.
+  // `next build` writes the site to `out/`; ASSETS serves it from the edge.
   "assets": {
     "directory": "./out",
+    "binding": "ASSETS",
+    "run_worker_first": true,
 
     // `out/` contains index.html + 404.html and no extensionless files, so let
     // Cloudflare do the usual /foo -> /foo.html and /foo/ -> /foo/index.html

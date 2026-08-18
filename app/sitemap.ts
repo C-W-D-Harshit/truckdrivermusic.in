@@ -10,7 +10,7 @@ export const dynamic = "force-static";
  * `new Date()` would claim a fresh edit on every deploy and crawlers learn to
  * ignore a lastmod that always moves.
  */
-const LAST_MODIFIED = "2026-08-12";
+const LAST_MODIFIED = "2026-08-18";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
@@ -19,6 +19,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: LAST_MODIFIED,
       changeFrequency: "monthly",
       priority: 1,
+      images: [
+        `${SITE_URL}/og.jpg`,
+        `${SITE_URL}/hero-desktop.webp`,
+        `${SITE_URL}/hero-mobile.webp`,
+      ],
     },
   ];
 }
